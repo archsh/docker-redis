@@ -15,7 +15,7 @@ RUN cd /opt && curl http://download.redis.io/releases/redis-${REDIS_VERSION}.tar
 VOLUME /data
 WORKDIR /data
 
-COPY docker-entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
 # ENTRYPOINT ["/entrypoint.sh"]
 
 EXPOSE 6379
