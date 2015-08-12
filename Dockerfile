@@ -10,7 +10,7 @@ COPY entrypoint.sh /entrypoint.sh
 
 RUN yum install -y ca-certificates \
 	&& wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/1.2/gosu-amd64" \
-	&& chmod +x /usr/local/bin/gosu 
+	&& chmod +x /usr/local/bin/gosu
 
 RUN cd /opt && curl http://download.redis.io/releases/redis-${REDIS_VERSION}.tar.gz | tar zxv \
 	&& yum groupinstall -y "Development tools" \
