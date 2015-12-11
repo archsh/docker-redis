@@ -15,7 +15,7 @@ RUN cd /opt && curl http://download.redis.io/releases/redis-${REDIS_VERSION}.tar
 	&& make -C redis-${REDIS_VERSION} && make -C redis-${REDIS_VERSION} install \
 	&& rm -rf redis-${REDIS_VERSION} \
 	&& mkdir /data && chown redis:redis /data \
-	&& yum --setopt=groupremove_leaf_only=1 groupremove -y 'Development Tools' \
+	&& yum hisotry undo -y `yum history | grep System | head -n 1 | awk '{ print $1 }'` \
 	&& chmod +x  /entrypoint.sh
 
 VOLUME /data
