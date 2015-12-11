@@ -11,11 +11,11 @@ RUN yum install -y ca-certificates \
 	&& chmod +x /usr/local/bin/gosu
 
 RUN cd /opt && curl http://download.redis.io/releases/redis-${REDIS_VERSION}.tar.gz | tar zxv \
-	&& yum groupinstall -y "Development Tools" \
+	&& yum install -y gcc \
 	&& make -C redis-${REDIS_VERSION} && make -C redis-${REDIS_VERSION} install \
 	&& rm -rf redis-${REDIS_VERSION} \
 	&& mkdir /data && chown redis:redis /data \
-	&& yum hisotry undo -y `yum history | grep System | head -n 1 | awk '{ print $1 }'` \
+	&& yum remove -y gcc \
 	&& chmod +x  /entrypoint.sh
 
 VOLUME /data
