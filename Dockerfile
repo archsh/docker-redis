@@ -1,28 +1,15 @@
-FROM extvos/centos
+FROM extvos/alpine
 MAINTAINER  "Mingcai SHEN <archsh@gmail.com>"
-ENV REDIS_VERSION 3.0.3
-
-RUN groupadd -r redis && useradd -r -g redis redis
+ENV REDIS_VERSION 3.2.0
 
 COPY entrypoint.sh /entrypoint.sh
 
-RUN yum install -y ca-certificates \
-	&& wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/1.2/gosu-amd64" \
-	&& chmod +x /usr/local/bin/gosu
+RUN apk update && apk add redis
 
-RUN cd /opt && curl http://download.redis.io/releases/redis-${REDIS_VERSION}.tar.gz | tar zxv \
-	&& yum install -y gcc \
-	&& make -C redis-${REDIS_VERSION} && make -C redis-${REDIS_VERSION} install \
-	&& rm -rf redis-${REDIS_VERSION} \
-	&& mkdir /data && chown redis:redis /data \
-	&& yum remove -y gcc \
-	&& chmod +x  /entrypoint.sh
+VOLUME /var/lib/redis
+VOLUME /var/log
+VOLUME /etc/redis
 
-VOLUME /data
-WORKDIR /data
-
-
-ENTRYPOINT ["/entrypoint.sh"]
 
 EXPOSE 6379
 CMD [ "redis-server" ]
