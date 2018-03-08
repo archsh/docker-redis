@@ -10,6 +10,7 @@ VOLUME /var/lib/redis
 VOLUME /var/log
 VOLUME /etc/redis
 
+ADD redis.conf.template /etc/redis/
 
 EXPOSE 6379
 CMD [ "redis-server", "--protected-mode no" ]
