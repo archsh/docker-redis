@@ -14,6 +14,19 @@ VOLUME /etc/redis
 
 ADD redis.conf.template /usr/share/redis/
 
+ENV REDIS_BIND
+ENV REDIS_PORT 6379
+ENV REDIS_PROTECTED_MODE yes
+ENV REDIS_DATABASE 16
+ENV REDIS_LOGLEVEL notice
+
+ENV REDIS_MASTER_HOST
+ENV REDIS_MASTER_PORT 6379
+ENV REDIS_MASTER_AUTH
+ENV REDIS_SLAVE_PRIORITY 100
+
+
 EXPOSE 6379
+
 ENTRYPOINT ["/bin/sh", "/entrypoint.sh"]
 CMD [ "redis-server", "/etc/redis/redis.conf" ]

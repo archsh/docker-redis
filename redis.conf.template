@@ -58,7 +58,10 @@
 # IF YOU ARE SURE YOU WANT YOUR INSTANCE TO LISTEN TO ALL THE INTERFACES
 # JUST COMMENT THE FOLLOWING LINE.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-bind 127.0.0.1
+# bind 127.0.0.1
+{{if .REDIS_BIND}}
+bind {{.REDIS_BIND}}
+{{end}}
 
 # Protected mode is a layer of security protection, in order to avoid that
 # Redis instances left open on the internet are accessed and exploited.
@@ -77,11 +80,11 @@ bind 127.0.0.1
 # you are sure you want clients from other hosts to connect to Redis
 # even if no authentication is configured, nor a specific set of interfaces
 # are explicitly listed using the "bind" directive.
-protected-mode yes
+protected-mode {{ .REDIS_PROTECTED_MODE }}
 
 # Accept connections on the specified port, default is 6379 (IANA #815344).
 # If port 0 is specified Redis will not listen on a TCP socket.
-port 6379
+port {{ .REDIS_PORT }}
 
 # TCP listen() backlog.
 #
@@ -155,7 +158,7 @@ pidfile /var/run/redis_6379.pid
 # verbose (many rarely useful info, but not a mess like the debug level)
 # notice (moderately verbose, what you want in production probably)
 # warning (only very important / critical messages are logged)
-loglevel notice
+loglevel {{.REDIS_LOGLEVEL}}
 
 # Specify the log file name. Also the empty string can be used to force
 # Redis to log on the standard output. Note that if you use standard
@@ -175,7 +178,7 @@ logfile ""
 # Set the number of databases. The default database is DB 0, you can select
 # a different one on a per-connection basis using SELECT <dbid> where
 # dbid is a number between 0 and 'databases'-1
-databases 16
+databases {{ .REDIS_DATABASE }}
 
 ################################ SNAPSHOTTING  ################################
 #
@@ -263,14 +266,18 @@ dir /var/lib/redis/
 #    and resynchronize with them.
 #
 # slaveof <masterip> <masterport>
-
+{{if .REDIS_MASTER_HOST }}
+slaveof {{.REDIS_MASTER_HOST}} {{.REDIS_MASTER_PORT}}
+{{end}}
 # If the master is password protected (using the "requirepass" configuration
 # directive below) it is possible to tell the slave to authenticate before
 # starting the replication synchronization process, otherwise the master will
 # refuse the slave request.
 #
 # masterauth <master-password>
-
+{{if .REDIS_MASTER_AUTH}}
+masterauth {{.REDIS_MASTER_AUTH}}
+{{end}}
 # When a slave loses its connection with the master, or when the replication
 # is still in progress, the slave can act in two different ways:
 #
@@ -411,7 +418,7 @@ repl-disable-tcp-nodelay no
 # Redis Sentinel for promotion.
 #
 # By default the priority is 100.
-slave-priority 100
+slave-priority {{.REDIS_SLAVE_PRIORITY}}
 
 # It is possible for a master to stop accepting writes if there are less than
 # N slaves connected, having a lag less or equal than M seconds.
