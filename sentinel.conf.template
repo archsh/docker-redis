@@ -7,8 +7,8 @@ port {{.SENTINEL_PORT}}
 ### Monitos
 {{range $idx, $bkend := split .SENTINEL_MONITORS "," }}
 # {{$idx}} {{$bkend}} {{$bks := split $bkend ":"}}
-sentinel monitor {{index $bks 0}} {{index $bks 1}} {{index $bks 2}} {{.SENTINEL_QUORUM}}
-sentinel down-after-milliseconds {{index $bks 0}} {{.SENTINEL_DOWN_AFTER}}
-sentinel failover-timeout {{index $bks 0}} {{.SENTINEL_FAILOVER}}
-sentinel parallel-syncs {{index $bks 0}} {{.SENTINEL_PARALLEL_SYNCS}}
+sentinel monitor {{index $bks 0}} {{index $bks 1}} {{index $bks 2}} {{$.SENTINEL_QUORUM}}
+sentinel down-after-milliseconds {{index $bks 0}} {{$.SENTINEL_DOWN_AFTER}}
+sentinel failover-timeout {{index $bks 0}} {{$.SENTINEL_FAILOVER}}
+sentinel parallel-syncs {{index $bks 0}} {{$.SENTINEL_PARALLEL_SYNCS}}
 {{end}}
