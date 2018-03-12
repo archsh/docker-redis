@@ -5,8 +5,8 @@ bind {{.SENTINEL_BIND}}
 port {{.SENTINEL_PORT}}
 
 ### Monitos
-{{range _, $bkend := split .SENTINEL_MONITORS "," }}
-# {{$bkend}} {{$bks := split $bkend ":"}}
+{{range $idx, $bkend := split .SENTINEL_MONITORS "," }}
+# {{$idx}} {{$bkend}} {{$bks := split $bkend ":"}}
 sentinel monitor {{index $bks 0}} {{index $bks 1}} {{index $bks 2}} {{.SENTINEL_QUORUM}}
 sentinel down-after-milliseconds {{index $bks 0}} {{.SENTINEL_DOWN_AFTER}}
 sentinel failover-timeout {{index $bks 0}} {{.SENTINEL_FAILOVER}}
