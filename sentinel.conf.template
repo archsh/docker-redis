@@ -1,7 +1,7 @@
 ####
 {{if .SENTINEL_BIND}}
 bind {{.SENTINEL_BIND}}
-{{SENTINEL_BIND}}
+{{end}}
 port {{.SENTINEL_PORT}}
 
 ### Monitos
