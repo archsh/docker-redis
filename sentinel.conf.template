@@ -3,7 +3,7 @@
 bind {{.SENTINEL_BIND}}
 {{end}}
 port {{.SENTINEL_PORT}}
-
+protected-mode {{.REDIS_PROTECTED_MODE}}
 ### Monitos
 {{range $idx, $bkend := split .SENTINEL_MONITORS "," }}
 # {{$idx}} {{$bkend}} {{$bks := split $bkend ":"}}
