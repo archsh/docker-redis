@@ -4,7 +4,7 @@ ENV REDIS_VERSION 3.2.0
 
 COPY entrypoint.sh /entrypoint.sh
 
-RUN apk update && apk add redis
+RUN apk update && apk add --no-cache redis
 RUN wget https://github.com/noqcks/gucci/releases/download/v0.0.4/gucci-v0.0.4-linux-amd64 -O /usr/bin/gucci \
     && chmod +x /usr/bin/gucci /entrypoint.sh
 
