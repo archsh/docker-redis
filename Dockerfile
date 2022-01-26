@@ -1,6 +1,6 @@
-FROM extvos/alpine:3.6
+FROM extvos/alpine:latest
 MAINTAINER  "Mingcai SHEN <archsh@gmail.com>"
-ENV REDIS_VERSION 3.2.0
+ENV REDIS_VERSION 6.2.6
 
 COPY entrypoint.sh /entrypoint.sh
 
